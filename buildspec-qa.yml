@@ -1,0 +1,19 @@
+version: 0.2
+run-as: root
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - npm install -g serverless@3.38.0
+      - npm install
+  pre_build:
+    commands:
+      - aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:677590119840:secret:ATS_api-studio-api_env_qa-K60xtA --query SecretString --output text > .env.qa
+      
+  build:
+    commands:
+      - serverless deploy --stage ${STAGE_NAME}
+cache:
+  paths:
+    - node_modules

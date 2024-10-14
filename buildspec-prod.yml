@@ -1,0 +1,56 @@
+version: 0.2
+run-as: root
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - npm install -g serverless@3.38.0
+      - npm install
+  pre_build:
+    commands:
+      - aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:683358980121:secret:ATS_api-studio-api_env_prod-eMiS4I --query SecretString --output text > .env.prod
+      # Load development secrets from the repository
+      - echo "Loading development secrets from .env.dev..."
+
+      # Extract, sort, and normalize keys from the secrets (ignore values)
+      - echo "Extracting and sorting keys from .env.prod and .env.dev..."
+      - prod_keys=$(grep -o '^[^=]*' .env.prod | sort | uniq | tr -d ' \t\r')
+      - dev_keys=$(grep -o '^[^=]*' .env.dev | sort | uniq | tr -d ' \t\r')
+      
+      # Normalize the keys by removing all whitespace and extra newlines
+      - prod_keys=$(echo "$prod_keys" | tr -d '\n' | tr -d ' ')
+      - dev_keys=$(echo "$dev_keys" | tr -d '\n' | tr -d ' ')
+
+      # Debug: Print the normalized keys with line numbers for comparison
+      - echo "Normalized Production keys (with line numbers):"
+      - echo "$prod_keys" | nl
+      - echo "Normalized Development keys (with line numbers):"
+      - echo "$dev_keys" | nl
+
+      # Check if either variable is empty
+      - if [ -z "$prod_keys" ]; then
+          echo "prod_keys is empty. Exiting.";
+          exit 1;
+        fi
+      - if [ -z "$dev_keys" ]; then
+          echo "dev_keys is empty. Exiting.";
+          exit 1;
+        fi
+
+      # Compare keys only (ignore values)
+      - echo "Comparing keys..."
+
+
+      # Stop the build if there is any difference in keys
+      - echo "Comparing keys..."
+      - if [ "$prod_keys" != "$dev_keys" ]; then
+          echo "Key mismatch between production and development environments. Stopping the build.";
+          exit 1;
+        fi
+  build:
+    commands:
+      - serverless deploy --stage ${STAGE_NAME}
+cache:
+  paths:
+    - node_modules

@@ -1,0 +1,718 @@
+createDiscovery:
+  handler: src/lambdaHandler/lambdaHandler.createDiscoveryLambda
+  events:
+    - http:
+        path: discovery
+        method: POST
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        # description: "It will get data from DB"
+        bodyType: "createDiscoveryRequest"
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getDiscoveryResponse"
+
+updateDiscovery:
+  handler: src/lambdaHandler/lambdaHandler.updateDiscoveryLambda
+  events:
+    - http:
+        path: discovery/{id}
+        method: PATCH
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        request:
+          parameters:
+            paths:
+              id: true
+        # description: "It will get data from DB"
+        bodyType: "updateDiscoveryRequest"
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getDiscoveryResponse"
+
+getDiscoveryDetails:
+  handler: src/lambdaHandler/lambdaHandler.getDiscoveryDetailsLambda
+  events:
+    - http:
+        path: discovery/{id}
+        method: GET
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        # description: "It will get data from DB"
+        # bodyType: "createCommentRequest"
+        request:
+          parameters:
+            paths:
+              id: true
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getDiscoveryResponse"
+
+getDiscoveryByCompany:
+  handler: src/lambdaHandler/lambdaHandler.getDiscoveryByCompanyLambda
+  events:
+    - http:
+        path: discoveries
+        method: GET
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        responseData:
+          200:
+            bodyType: "getDiscoveryListResponse"
+        queryStringParameters:
+          page:
+            required: false
+            type: "String"
+            description: "Filter by page number"
+          size:
+            required: false
+            type: "String"
+            description: "Filter by page size"
+          assetType:
+            required: false
+            type: "String"
+            description: "Filter by assetType"
+          assetName:
+            required: false
+            type: "String"
+            description: "Filter by assetName"
+          department:
+            required: false
+            type: "String"
+            description: "Filter by department"
+          normalized:
+            required: false
+            type: "Boolean"
+            description: "Filter by department"
+
+deleteDiscovery:
+  handler: src/lambdaHandler/lambdaHandler.deleteDiscoveryLambda
+  events:
+    - http:
+        path: discovery/{id}
+        method: DELETE
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        request:
+          parameters:
+            paths:
+              id: true
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getDiscoveryResponse"
+
+createNormalization:
+  handler: src/lambdaHandler/lambdaHandler.createNormalizationLambda
+  events:
+    - http:
+        path: normalization
+        method: POST
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        # description: "It will get data from DB"
+        bodyType: "createNormalizationRequest"
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getNormalizationResponse"
+
+updateNormalization:
+  handler: src/lambdaHandler/lambdaHandler.updateNormalizationLambda
+  events:
+    - http:
+        path: normalization/{id}
+        method: PATCH
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        request:
+          parameters:
+            paths:
+              id: true
+        # description: "It will get data from DB"
+        bodyType: "updateNormalizationRequest"
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getNormalizationResponse"
+
+getNormalizationDetails:
+  handler: src/lambdaHandler/lambdaHandler.getNormalizationDetailsLambda
+  events:
+    - http:
+        path: normalization/{id}
+        method: GET
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        # description: "It will get data from DB"
+        # bodyType: "createCommentRequest"
+        request:
+          parameters:
+            paths:
+              id: true
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getNormalizationResponse"
+
+getNormalizationByCompany:
+  handler: src/lambdaHandler/lambdaHandler.getNormalizationByCompanyLambda
+  events:
+    - http:
+        path: normalizations
+        method: GET
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        responseData:
+          200:
+            bodyType: "getNormalizationListResponse"
+        queryStringParameters:
+          page:
+            required: false
+            type: "String"
+            description: "Filter by page number"
+          size:
+            required: false
+            type: "String"
+            description: "Filter by page size"
+          assetType:
+            required: false
+            type: "String"
+            description: "Filter by assetType"
+          assetName:
+            required: false
+            type: "String"
+            description: "Filter by assetName"
+          department:
+            required: false
+            type: "String"
+            description: "Filter by department"
+          discovery:
+            required: false
+            type: "String"
+            description: "Filter by discovery"
+
+deleteNormalization:
+  handler: src/lambdaHandler/lambdaHandler.deleteNormalizationLambda
+  events:
+    - http:
+        path: normalization/{id}
+        method: DELETE
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        request:
+          parameters:
+            paths:
+              id: true
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getDiscoveryResponse"
+
+createTemplate:
+  handler: src/lambdaHandler/lambdaHandler.createTemplateLambda
+  events:
+    - http:
+        path: template
+        method: POST
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        # description: "It will get data from DB"
+        bodyType: "createTemplateRequest"
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getTemplateResponse"
+
+updateTemplate:
+  handler: src/lambdaHandler/lambdaHandler.updateTemplateLambda
+  events:
+    - http:
+        path: template/{id}
+        method: PATCH
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        request:
+          parameters:
+            paths:
+              id: true
+        # description: "It will get data from DB"
+        bodyType: "createTemplateRequest"
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getTemplateResponse"
+
+getTemplateDetails:
+  handler: src/lambdaHandler/lambdaHandler.getTemplateDetailsLambda
+  events:
+    - http:
+        path: template/{id}
+        method: GET
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        # description: "It will get data from DB"
+        # bodyType: "createCommentRequest"
+        request:
+          parameters:
+            paths:
+              id: true
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getTemplateResponse"
+
+getTemplateByCompany:
+  handler: src/lambdaHandler/lambdaHandler.getTemplateByCompanyLambda
+  events:
+    - http:
+        path: templates
+        method: GET
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        responseData:
+          200:
+            bodyType: "getTemplateListResponse"
+        queryStringParameters:
+          page:
+            required: false
+            type: "String"
+            description: "Filter by page number"
+          size:
+            required: false
+            type: "String"
+            description: "Filter by page size"
+          type:
+            required: false
+            type: "String"
+            description: "Filter by template Type"
+
+deleteTemplate:
+  handler: src/lambdaHandler/lambdaHandler.deleteTemplateLambda
+  events:
+    - http:
+        path: template/{id}
+        method: DELETE
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        request:
+          parameters:
+            paths:
+              id: true
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getTemplateResponse"
+
+createAssetType:
+  handler: src/lambdaHandler/lambdaHandler.createAssetTypeLambda
+  events:
+    - http:
+        path: asset-type
+        method: POST
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        # description: "It will get data from DB"
+        bodyType: "createAssetTypeRequest"
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getAssetTypeResponse"
+
+updateAssetType:
+  handler: src/lambdaHandler/lambdaHandler.updateAssetTypeLambda
+  events:
+    - http:
+        path: asset-type/{id}
+        method: PATCH
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        request:
+          parameters:
+            paths:
+              id: true
+        # description: "It will get data from DB"
+        bodyType: "createAssetTypeRequest"
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getAssetTypeResponse"
+
+getAssetTypeDetails:
+  handler: src/lambdaHandler/lambdaHandler.getAssetTypeDetailsLambda
+  events:
+    - http:
+        path: asset-type/{id}
+        method: GET
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        # description: "It will get data from DB"
+        # bodyType: "createCommentRequest"
+        request:
+          parameters:
+            paths:
+              id: true
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getAssetTypeResponse"
+        queryStringParameters:
+          nodeId:
+            required: false
+            type: "String"
+            description: "Filter by node Id"
+
+getAssetTypeByCompany:
+  handler: src/lambdaHandler/lambdaHandler.getAssetTypeByCompanyLambda
+  events:
+    - http:
+        path: asset-types
+        method: GET
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        responseData:
+          200:
+            bodyType: "getAssetTypeListResponse"
+        queryStringParameters:
+          page:
+            required: false
+            type: "String"
+            description: "Filter by page number"
+          size:
+            required: false
+            type: "String"
+            description: "Filter by page size"
+          searchName:
+            required: false
+            type: "String"
+            description: "Filter by name"
+
+deleteAssetType:
+  handler: src/lambdaHandler/lambdaHandler.deleteAssetTypeLambda
+  events:
+    - http:
+        path: asset-type/{id}
+        method: DELETE
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        request:
+          parameters:
+            paths:
+              id: true
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getAssetTypeResponse"
+        queryStringParameters:
+          nodeId:
+            required: false
+            type: "String"
+            description: "Filter by node Id"
+
+createAsset:
+  handler: src/lambdaHandler/lambdaHandler.createAssetLambda
+  events:
+    - http:
+        path: asset
+        method: POST
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        # description: "It will get data from DB"
+        bodyType: "createAssetRequest"
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getAssetResponse"
+
+updateAsset:
+  handler: src/lambdaHandler/lambdaHandler.updateAssetLambda
+  events:
+    - http:
+        path: asset/{id}
+        method: PATCH
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        request:
+          parameters:
+            paths:
+              id: true
+        # description: "It will get data from DB"
+        bodyType: "createAssetRequest"
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getAssetResponse"
+
+getAssetDetails:
+  handler: src/lambdaHandler/lambdaHandler.getAssetDetailsLambda
+  events:
+    - http:
+        path: asset/{id}
+        method: GET
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        # description: "It will get data from DB"
+        # bodyType: "createCommentRequest"
+        request:
+          parameters:
+            paths:
+              id: true
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getAssetResponse"
+        queryStringParameters:
+          nodeId:
+            required: false
+            type: "String"
+            description: "Filter by node Id"
+
+getAssetByCompany:
+  handler: src/lambdaHandler/lambdaHandler.getAssetByCompanyLambda
+  events:
+    - http:
+        path: assets
+        method: GET
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        responseData:
+          200:
+            bodyType: "getAssetListResponse"
+        queryStringParameters:
+          page:
+            required: false
+            type: "String"
+            description: "Filter by page number"
+          size:
+            required: false
+            type: "String"
+            description: "Filter by page size"
+          searchName:
+            required: false
+            type: "String"
+            description: "Filter by name"
+
+deleteAsset:
+  handler: src/lambdaHandler/lambdaHandler.deleteAssetLambda
+  events:
+    - http:
+        path: asset/{id}
+        method: DELETE
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+            - accesstoken
+        private: true
+        request:
+          parameters:
+            paths:
+              id: true
+        responseData:
+          200:
+            # description: "Data Get successfully"
+            bodyType: "getAssetResponse"
+        queryStringParameters:
+          nodeId:
+            required: false
+            type: "String"
+            description: "Filter by node Id"

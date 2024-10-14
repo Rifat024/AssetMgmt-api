@@ -1,0 +1,29 @@
+- Effect: "Allow"
+  Action:
+    - lambda:*
+    - mobiletargeting:*
+    - sms-voice:*
+    - sns:*
+    - s3:*
+    - kms:*
+
+  Resource: "*"
+# - Effect: Allow
+#   Action:
+#     - dynamodb:Query
+#     - dynamodb:Scan
+#     - dynamodb:GetItem
+#     - dynamodb:PutItem
+#     - dynamodb:UpdateItem
+#     - dynamodb:DeleteItem
+#   Resource:
+#      - "arn:aws:dynamodb:${env:region}:*:table/${env:APP_PREFIX}-${env:env}-${env:DBT_COMMENTS}"
+#      - "arn:aws:dynamodb:${env:region}:*:table/${env:APP_PREFIX}-${env:env}-${env:DBT_COMMENT_REACTIONS}"
+
+# - Effect: Allow
+#   Action:
+#     - dynamodb:Query
+#     - dynamodb:Scan
+#   Resource:
+#    - "arn:aws:dynamodb:${env:region}:*:table/${env:APP_PREFIX}-${env:env}-${env:DBT_COMMENTS}/index/*"
+#    - "arn:aws:dynamodb:${env:region}:*:table/${env:APP_PREFIX}-${env:env}-${env:DBT_COMMENT_REACTIONS}/index/*"

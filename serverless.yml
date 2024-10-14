@@ -1,0 +1,92 @@
+service: assetMgmt-api
+useDotenv: true
+frameworkVersion: ">=3.38.0"
+
+plugins:
+  - serverless-auto-swagger
+  - serverless-webpack
+  - serverless-dotenv-plugin
+  - serverless-offline
+  - serverless-dynamo-stream-plugin
+  - serverless-dynamodb-local
+  - serverless-domain-manager
+  - serverless-plugin-log-retention
+  - serverless-deployment-bucket
+  - serverless-plugin-scripts
+custom:
+  apiKey: ${env:env}-${env:API_KEY}
+  accountId: !Ref AWS::AccountId
+  pEnvironment: ${opt:stage, self:provider.stage}
+  logRetentionInDays: ${env:logRetentionInDays}
+  autoswagger:
+    title: "api AssetMgmt APIs"
+    typefiles: ["./src/types/responses.d.ts", "./src/types/requests.d.ts"]
+    generateSwaggerOnDeploy: true
+    basePath: /${env:DOMAIN_NAME_PATH}
+    host: ${env:DOMAIN_NAME}
+    schemes: ["https"]
+    apiKeyHeaders: ["accesstoken", "x-api-key", "Content-Type"]
+    apiType: "http"
+    swaggerPath: "swagger"
+
+  webpack:
+    webpackConfig: "webpack.config.js" # Name of webpack configuration file
+    includeModules: true # Node modules configuration for packaging
+    packager: "yarn" # Packager that will be used to package your external modules
+  excludeModules:
+    - aws-sdk
+  dynamodb:
+    stages:
+      - test
+    # UNCOMMENT FOR LOCAL
+    # start:
+    #   port: 8000
+    #   inMemory: true
+    #   heapInitial: 200m
+    #   heapMax: 1g
+    #   migrate: true
+    #   seed: true
+    #   convertEmptyValues: true
+    # UNCOMMENT ENDS FOR LOCAL
+  customDomain:
+    domainName: ${env:DOMAIN_NAME}
+    basePath: ${env:DOMAIN_NAME_PATH}
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'test'}
+  runtime: nodejs20.x
+  # profile: comp-campaign-building-api
+  apiGateway:
+    binaryMediaTypes:
+      - "multipart/form-data"
+    apiKeys:
+      - ${env:env}-${env:API_KEY}
+  #   vpc:
+  #     securityGroupIds:
+  #       - ${env:VPC_SECURITY_GROUP_ID}
+  #     subnetIds:
+  #       - ${env:VPC_SUBNET_ID}
+  versionFunctions: false
+  timeout: 30 # The default is 6 seconds. Note: API Gateway current maximum is 30 seconds
+  websocketsApiRouteSelectionExpression: $request.body.action
+  logs:
+    websocket:
+      level: ERROR
+  deploymentBucket:
+    name: ${env:DEPLOYMENT_BUCKET}
+    maxPreviousDeploymentArtifacts: 5
+  deploymentPrefix: ${env:PROJECT_NM}/${env:env}
+  # environment:
+  #   DYNAMODB_TABLE: homework
+
+  iam:
+    role:
+      statements: ${file(./serverless-config/roles.yml)}
+
+functions: ${file(./serverless-config/functions.yml)}
+# resources:
+#   Resources: ${file(./serverless-config/dbresources.yml)}
+#  ${file(./serverless-config/setup-cognito.yml)}
